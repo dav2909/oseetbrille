@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Formation - Visionnage</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; background-color: #f8fafc; }
+        .video-container { position: relative; padding-bottom: 56.25%; /* Ratio 16:9 */ height: 0; overflow: hidden; border-radius: 8px; background: #000; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .access-denied { background: #fee2e2; border: 1px solid #ef4444; color: #991b1b; padding: 20px; border-radius: 8px; text-align: center; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="denied-block" class="access-denied hidden">
+        <h2>Accès restreint</h2>
+        <p>Vous devez acheter la formation pour accéder à cette vidéo.</p>
+        <a href="index.html">Retourner à la page d'accueil</a>
+    </div>
+
+    <div id="content-block" class="hidden">
+        <h1>Module 1 : Organisation & Logistique</h1>
+        
+        <div class="video-container">
+            <iframe 
+                src="https://iframe.mediadelivery.net/embed/LIBRARY_ID/VIDEO_ID?autoplay=false&loop=false" 
+                loading="lazy" 
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" 
+                allowfullscreen="true">
+            </iframe>
+        </div>
+
+        <h3>Ressources téléchargeables</h3>
+        <ul>
+            <li><a href="fichiers/check-list-evenement.pdf" download>Check-list logistique (PDF)</a></li>
+        </ul>
+    </div>
+
+    <script>
+        // Logique de vérification d'accès minimale
+        function checkAccess() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('session_id') || urlParams.get('access_token');
+
+            // En production zéro-coût : Stripe redirige vers formation.html?session_id={CHECKOUT_SESSION_ID}
+            if (token) {
+                // Stocker l'accès localement pour éviter de redemander le paramètre d'URL
+                localStorage.setItem('has_purchased_course', 'true');
+            }
+
+            const hasAccess = localStorage.getItem('has_purchased_course') === 'true';
+
+            if (hasAccess) {
+                document.getElementById('content-block').classList.remove('hidden');
+            } else {
+                document.getElementById('denied-block').classList.remove('hidden');
+            }
+        }
+
+        // Exécution au chargement
+        checkAccess();
+    </script>
+</body>
+</html>
