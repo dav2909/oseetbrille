@@ -3,41 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formation Événementiel — Accès Exclusif</title>
+    <title>Expertise & Événementiel — Nom de la Cliente</title>
     <script src="https://js.stripe.com/v3/"></script>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; }
-        .card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .btn-stripe { background-color: #635bff; color: white; border: none; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
-        .btn-stripe:hover { background-color: #4b45c6; }
+        /* Style général dépouillé et moderne */
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        nav a {
+            margin-left: 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            color: #0f172a;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+        }
+
+        /* Cartes & Grilles */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            width: fit-content;
+        }
+
+        .badge-free { background: #dcfce7; color: #166534; }
+        .badge-paid { background: #e0e7ff; color: #3730a3; }
+        .badge-event { background: #fef3c7; color: #92400e; }
+
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 16px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: #f4f5ff;
+        }
+
+        /* Formulaire de capture mail */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>Masterclass : Réussir ses Événements Pro</h1>
-        <p>Accédez à 2h de formation vidéo préenregistrée et aux supports de cours.</p>
-        <h2>Prix : 49,00 €</h2>
-        
-        <button id="checkout-button" class="btn-stripe">Acheter la formation</button>
-    </div>
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">Événementiel & Masterclass</a>
+            <nav>
+                <a href="#evenements">Événements</a>
+                <a href="#gratuite">Formation Gratuite</a>
+                <a href="#formations">Formations Payantes</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Organisez des Événements d'Exception</h1>
+        <p>Découvrez mes conseils, participez aux prochaines masterclass en direct et accédez à mes formations vidéo pour réussir tous vos projets événementiels.</p>
+        <a href="#formations" class="btn" style="width: auto; padding: 14px 32px;">Découvrir les formations</a>
+    </section>
+
+    <section id="evenements" class="container">
+        <div class="section-title">
+            <h2>Événements & Masterclass à venir</h2>
+            <p>Inscrivez-vous aux prochaines sessions live et rencontres.</p>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <div>
+                    <span class="badge badge-event">Masterclass Live</span>
+                    <h3>Comment budgétiser un événement sans surprise</h3>
+                    <p><strong>Date :</strong> 15 Octobre à 19h00</p>
+                    <p>Un atelier en direct de 1h30 pour maîtriser la gestion financière de vos projets.</p>
+                </div>
+                <a href="#gratuite" class="btn btn-outline">S'inscrire au Direct</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <span class="badge badge-event">Atelier Présentiel</span>
+                    <h3>Meetup Événementiel & Networking</h3>
+                    <p><strong>Date :</strong> 28 Novembre à Paris</p>
+                    <p>Une journée de conseils personnalisés et d'échanges entre passionnés.</p>
+                </div>
+                <a href="#gratuite" class="btn btn-outline">Réserver sa place</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="gratuite" style="background: #ffffff; border-y: 1px solid #e2e8f0;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Formation Gratuite</h2>
+                <p>Recevez immédiatement votre premier cours vidéo offert.</p>
+            </div>
+            <div style="max-width: 500px; margin: 0 auto;" class="card">
+                <span class="badge badge-free">Accès Immédiat</span>
+                <h3>Les 5 erreurs à éviter pour réussir son événement</h3>
+                <p>Renseignez votre e-mail ci-dessous pour recevoir le lien d'accès à la vidéo gratuite.</p>
+                
+                <form action="#" method="POST" onsubmit="alert('Inscription enregistrée ! (À relier à votre outil e-mailing)'); return false;">
+                    <div class="form-group">
+                        <input type="text" placeholder="Votre prénom" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Votre adresse e-mail" required>
+                    </div>
+                    <button type="submit" class="btn">Recevoir la vidéo gratuite</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="formations" class="container">
+        <div class="section-title">
+            <h2>Formations Complètes</h2>
+            <p>Des programmes vidéo en accès illimité pour vous former à votre rythme.</p>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <div>
+                    <span class="badge badge-paid">Programme Vidéo</span>
+                    <h3>Masterclass : Organisation Événementielle Pro</h3>
+                    <p>Accès complet à 2 heures de vidéo préenregistrée, supports PDF téléchargeables et modèles de contrats.</p>
+                    <div class="price">49,00 €</div>
+                </div>
+                
+                <button id="pay-button" class="btn">Acheter & Accéder</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Tous droits réservés. Site hébergé gratuitement via Jamstack & Netlify.</p>
+    </footer>
 
     <script>
-        // Initialiser Stripe avec ta Clé Publique (pk_live_... ou pk_test_...)
-        const stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+        const payButton = document.getElementById('pay-button');
 
-        const checkoutButton = document.getElementById('checkout-button');
-
-        checkoutButton.addEventListener('click', () => {
-            // Option A: Redirection vers un lien Stripe Payment Link (Recommandé - No-Code)
-            // Tu créés le lien directement dans le tableau de bord Stripe Dashboard > Payment Links
+        payButton.addEventListener('click', () => {
+            // Remplace ce lien par ton lien Stripe Payment Link créé dans ton tableau de bord Stripe
+            // Stripe redirigera l'acheteur vers formation.html après le paiement
             window.location.href = 'https://buy.stripe.com/votre_lien_de_paiement_custom';
-
-            /* // Option B: Redirection via Checkout Session ID si tu utilises un backend léger
-            stripe.redirectToCheckout({
-                sessionId: 'cs_test_SESSION_ID_VENANT_DU_BACKEND'
-            });
-            */
         });
     </script>
 </body>
