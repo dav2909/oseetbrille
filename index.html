@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expertise & Événementiel — Nom de la Cliente</title>
+    <title>La Maison Ose & Brille — Accompagnement & Événements</title>
+    <!-- Script Stripe -->
     <script src="https://js.stripe.com/v3/"></script>
     <style>
-        /* Style général dépouillé et moderne */
+        /* Charte Graphique "La Maison Ose & Brille" */
         :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --bg-light: #f8fafc;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
+            --primary: #a02848;         /* Bordeaux / Rose profond */
+            --primary-hover: #801e38;   /* Bordeaux foncé */
+            --gold: #c59b27;            /* Doré principal */
+            --gold-light: #f4ebd0;      /* Fond doré très clair */
+            --bg-cream: #faf6f0;        /* Fond crème chaud */
+            --bg-card: #ffffff;
+            --text-dark: #2d1820;       /* Marron/Bordeaux très foncé */
+            --text-muted: #6e5860;     /* Marron doux */
+            --border-gold: rgba(197, 155, 39, 0.3);
         }
 
         body {
@@ -20,17 +25,19 @@
             margin: 0;
             padding: 0;
             color: var(--text-dark);
-            background-color: var(--bg-light);
+            background-color: var(--bg-cream);
             line-height: 1.6;
         }
 
+        /* En-tête */
         header {
             background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 20px 0;
+            border-bottom: 2px solid var(--gold-light);
+            padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 10;
+            box-shadow: 0 2px 10px rgba(160, 40, 72, 0.05);
         }
 
         .nav-container {
@@ -42,49 +49,52 @@
             padding: 0 20px;
         }
 
-        .logo {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: var(--primary);
-            text-decoration: none;
-        }
-
         nav a {
             margin-left: 20px;
             color: var(--text-dark);
             text-decoration: none;
             font-size: 0.95rem;
-            font-weight: 500;
+            font-weight: 600;
+            transition: color 0.2s;
         }
 
         nav a:hover {
             color: var(--primary);
         }
 
+        /* Hero / En-tête de bienvenue */
         .hero {
             text-align: center;
-            padding: 80px 20px 60px;
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
+            padding: 70px 20px 50px;
+            background: linear-gradient(180deg, #ffffff 0%, var(--bg-cream) 100%);
+            border-bottom: 1px solid var(--border-gold);
         }
 
         .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
-            color: #0f172a;
+            font-size: 2.4rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+            font-weight: 700;
         }
 
-        .hero p {
+        .hero p.subtitle {
             font-size: 1.2rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin-top: 0;
+        }
+
+        .hero p.description {
+            font-size: 1.05rem;
             color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto 30px;
+            max-width: 650px;
+            margin: 0 auto 25px;
         }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 50px 20px;
         }
 
         .section-title {
@@ -94,14 +104,16 @@
 
         .section-title h2 {
             font-size: 1.8rem;
+            color: var(--primary);
             margin-bottom: 8px;
         }
 
         .section-title p {
-            color: var(--text-muted);
+            color: var(--gold);
+            font-weight: 500;
         }
 
-        /* Cartes & Grilles */
+        /* Grilles & Cartes */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -109,89 +121,102 @@
         }
 
         .card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            background: var(--bg-card);
+            border: 1px solid var(--border-gold);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 4px 15px rgba(160, 40, 72, 0.04);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        .card h3 {
-            margin-top: 0;
-            font-size: 1.3rem;
+        .card-vip {
+            border: 2px solid var(--gold);
+            background: linear-gradient(180deg, #ffffff 0%, #fffdf9 100%);
+            box-shadow: 0 8px 25px rgba(197, 155, 39, 0.15);
         }
 
         .badge {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 9999px;
+            padding: 4px 14px;
+            border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: 12px;
             width: fit-content;
         }
 
-        .badge-free { background: #dcfce7; color: #166534; }
-        .badge-paid { background: #e0e7ff; color: #3730a3; }
-        .badge-event { background: #fef3c7; color: #92400e; }
+        .badge-vip { background: var(--gold-light); color: var(--gold); border: 1px solid var(--gold); }
+        .badge-free { background: #e8f5e9; color: #2e7d32; }
+        .badge-paid { background: #fce4ec; color: var(--primary); }
 
         .price {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: bold;
-            margin: 16px 0;
+            color: var(--primary);
         }
 
+        /* Boutons */
         .btn {
             display: inline-block;
             background-color: var(--primary);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
+            color: #ffffff;
+            padding: 14px 24px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             text-align: center;
             border: none;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
             width: 100%;
             box-sizing: border-box;
+            box-shadow: 0 4px 12px rgba(160, 40, 72, 0.2);
         }
 
         .btn:hover {
             background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-gold {
+            background-color: var(--gold);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(197, 155, 39, 0.3);
+        }
+
+        .btn-gold:hover {
+            background-color: #b08a20;
         }
 
         .btn-outline {
             background-color: transparent;
             color: var(--primary);
             border: 2px solid var(--primary);
+            box-shadow: none;
         }
 
         .btn-outline:hover {
-            background-color: #f4f5ff;
+            background-color: #fce4ec;
         }
 
-        /* Formulaire de capture mail */
-        .form-group {
-            margin-bottom: 16px;
-        }
-
+        /* Formulaire */
         .form-group input {
             width: 100%;
             padding: 12px;
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--border-gold);
             border-radius: 8px;
             box-sizing: border-box;
+            margin-bottom: 12px;
+            background: #faf6f0;
         }
 
         footer {
             text-align: center;
             padding: 40px 20px;
             background: #ffffff;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid var(--border-gold);
             color: var(--text-muted);
             font-size: 0.9rem;
         }
@@ -202,12 +227,11 @@
     <!-- Barre de Navigation avec Logo -->
     <header>
         <div class="nav-container">
-            <a href="#" class="logo-brand" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
-                <!-- Image du logo rond -->
-                <img src="logo.jpg" alt="Logo La Maison Ose & Brille" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #b83253;">
+            <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                <img src="logo.jpeg" alt="Logo La Maison Ose & Brille" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary);">
                 <div style="display: flex; flex-direction: column;">
-                    <span style="font-size: 1.1rem; font-weight: bold; color: #b83253; line-height: 1.2;">LA MAISON</span>
-                    <span style="font-size: 0.9rem; font-weight: 600; color: #9a7330;">Ose & Brille</span>
+                    <span style="font-size: 1.1rem; font-weight: bold; color: var(--primary); line-height: 1.2;">LA MAISON</span>
+                    <span style="font-size: 0.85rem; font-weight: 600; color: var(--gold); letter-spacing: 0.5px;">Ose & Brille</span>
                 </div>
             </a>
             <nav>
@@ -218,122 +242,93 @@
         </div>
     </header>
 
+    <!-- Section Présentation / Hero -->
     <section class="hero">
-        <h1>Organisez des Événements d'Exception</h1>
-        <p>Découvrez mes conseils, participez aux prochaines masterclass en direct et accédez à mes formations vidéo pour réussir tous vos projets événementiels.</p>
-        <a href="#formations" class="btn" style="width: auto; padding: 14px 32px;">Découvrir les formations</a>
+        <h1>La Maison Ose & Brille</h1>
+        <p class="subtitle">Un espace pour te reconnecter, te relever et rayonner à ta façon.</p>
+        <p class="description">
+            Ose être toi, et brille pour le monde. Découvre nos programmes, ateliers VIP et formations pour lancer et développer ton activité en ligne.
+        </p>
+        <a href="#evenements" class="btn btn-gold" style="width: auto; padding: 14px 36px;">Découvrir le Bootcamp</a>
     </section>
 
-    <!-- Section 1 : Calendrier des Événements & Masterclass -->
+    <!-- Section Événements : BOOTCAMP BUSINESS VIP -->
     <section id="evenements" class="container">
         <div class="section-title">
-            <h2>Événements & Masterclass</h2>
-            <p>Retrouvez nos événements passés en replay et nos sessions à venir.</p>
+            <h2>Événements & Bootcamp</h2>
+            <p>Formations intensives et accompagnement en direct</p>
         </div>
 
         <div class="grid">
-            <!-- CARTE COMPLÈTE BOOTCAMP BUSINESS EN LIGNE (PASS VIP) -->
-            <div class="card" style="grid-column: 1 / -1; border: 2px solid var(--primary);">
+            <div class="card card-vip" style="grid-column: 1 / -1;">
                 <div>
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
                         <div>
-                            <span class="badge badge-event">Replay + Pass VIP</span>
-                            <span class="badge badge-free">Modalité Classique : Offert</span>
-                            <h3 style="font-size: 1.6rem; margin: 8px 0;">10 Jours Bootcamp : Business en Ligne</h3>
-                            <p style="color: var(--primary); font-weight: bold; margin-bottom: 16px;">
-                                Thème : Transformer ses compétences & passions en business en ligne rentable
-                            </p>
+                            <span class="badge badge-vip">BOOTCAMP 10 JOURS</span>
+                            <span class="badge badge-free">Modalité classique offerte</span>
+                            <h3 style="font-size: 1.6rem; margin: 8px 0; color: var(--primary);">Transforme tes compétences en Business Rentable</h3>
                         </div>
-                        <div class="price" style="margin: 0; color: var(--primary);">77,00 €</div>
+                        <div class="price">77,00 €</div>
                     </div>
 
-                    <p><strong>Format :</strong> En ligne (Zoom / Replay)</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;"><strong>Format :</strong> Session Zoom + Replays illimités 12 Mois</p>
 
-                    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;">
+                    <hr style="border: 0; border-top: 1px solid var(--border-gold); margin: 20px 0;">
 
-                    <h4 style="margin-bottom: 12px; color: #0f172a;">🎁 Ce que comprend l'Accès VIP (77 €) :</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; font-size: 0.95rem;">
-                        <div><strong>Bonus 1 :</strong> Workbook Premium (50 pages)</div>
-                        <div><strong>Bonus 2 :</strong> 100 prompts ChatGPT Entrepreneurs</div>
-                        <div><strong>Bonus 3 :</strong> 50 prompts Canva AI</div>
-                        <div><strong>Bonus 4 :</strong> Calendrier de contenu 90 jours</div>
-                        <div><strong>Bonus 5 :</strong> 50 idées de business IA & Téléphone</div>
-                        <div><strong>Bonus 6 :</strong> Replay illimité pendant 12 Mois</div>
-                        <div><strong>Bonus 7 :</strong> 3 Séances de coaching collectif VIP (2h)</div>
-                        <div><strong>Bonus 8 :</strong> Audit personnalisé de ton idée</div>
-                        <div><strong>Bonus 9 :</strong> Groupe WhatsApp privé (30 jours)</div>
-                        <div><strong>Bonus 10 :</strong> Guide "10 étapes pour tes 1000€"</div>
+                    <h4 style="margin-bottom: 14px; color: var(--primary);">🎁 Vos 10 Bonus VIP Inclus (77 €) :</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; font-size: 0.92rem;">
+                        <div>🎁 <strong>Bonus 1 :</strong> Workbook Premium (50 pages)</div>
+                        <div>🎁 <strong>Bonus 2 :</strong> 100 prompts ChatGPT Entrepreneurs</div>
+                        <div>🎁 <strong>Bonus 3 :</strong> 50 prompts Canva AI</div>
+                        <div>🎁 <strong>Bonus 4 :</strong> Calendrier de contenu 90 jours</div>
+                        <div>🎁 <strong>Bonus 5 :</strong> 50 idées business IA & Téléphone</div>
+                        <div>🎁 <strong>Bonus 6 :</strong> Replay illimité pendant 12 Mois</div>
+                        <div>🎁 <strong>Bonus 7 :</strong> 3 Séances de coaching collectif VIP</div>
+                        <div>🎁 <strong>Bonus 8 :</strong> Audit personnalisé de ton idée</div>
+                        <div>🎁 <strong>Bonus 9 :</strong> Groupe privé WhatsApp (30 jours)</div>
+                        <div>🎁 <strong>Bonus 10 :</strong> Guide "Premiers 1000€ en ligne"</div>
                     </div>
 
-                    <p style="background: #f1f5f9; padding: 12px; border-radius: 6px; font-size: 0.9rem; margin-top: 16px;">
-                        💡 <em>Tu ne seras jamais seule pendant cette aventure. Pendant 30 jours, tu intègres un groupe privé réservé aux participantes VIP.</em>
-                    </p>
+                    <div style="background: var(--gold-light); padding: 14px; border-radius: 10px; font-size: 0.9rem; margin-top: 20px; color: var(--text-dark);">
+                        💖 <em>Tu ne seras jamais seule pendant cette aventure. Pendant 30 jours, tu intègres un groupe privé réservé aux participantes VIP.</em>
+                    </div>
                 </div>
 
-                <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn" onclick="window.location.href='https://buy.stripe.com/votre_lien_stripe_vip_77e'">
-                        S'inscrire au Pass VIP (77 €)
+                <div style="margin-top: 24px;">
+                    <button class="btn btn-gold" onclick="window.location.href='https://buy.stripe.com/votre_lien_stripe_vip_77e'">
+                        Rejoindre l'Accès VIP (77 €)
                     </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="gratuite" style="background: #ffffff; border-y: 1px solid #e2e8f0;">
+    <!-- Section Lead Magnet / Offert -->
+    <section id="gratuite" style="background: #ffffff; border-y: 1px solid var(--border-gold);">
         <div class="container">
             <div class="section-title">
-                <h2>Formation Gratuite</h2>
-                <p>Recevez immédiatement votre premier cours vidéo offert.</p>
+                <h2>Ressource Offerte</h2>
+                <p>Commence ton aventure sans débourser un centime</p>
             </div>
-            <div style="max-width: 500px; margin: 0 auto;" class="card">
+            <div style="max-width: 480px; margin: 0 auto;" class="card">
                 <span class="badge badge-free">Accès Immédiat</span>
-                <h3>Les 5 erreurs à éviter pour réussir son événement</h3>
-                <p>Renseignez votre e-mail ci-dessous pour recevoir le lien d'accès à la vidéo gratuite.</p>
+                <h3 style="color: var(--primary);">Les 5 étapes pour structurer ton offre</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Reçois gratuitement la vidéo d'introduction et le modèle de travail direct par e-mail.</p>
                 
-                <form action="#" method="POST" onsubmit="alert('Inscription enregistrée ! (À relier à votre outil e-mailing)'); return false;">
+                <form action="#" method="POST" onsubmit="alert('Inscription enregistrée !'); return false;">
                     <div class="form-group">
-                        <input type="text" placeholder="Votre prénom" required>
+                        <input type="text" placeholder="Ton prénom" required>
+                        <input type="email" placeholder="Ton adresse e-mail" required>
                     </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Votre adresse e-mail" required>
-                    </div>
-                    <button type="submit" class="btn">Recevoir la vidéo gratuite</button>
+                    <button type="submit" class="btn btn-outline">Recevoir la vidéo gratuite</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <section id="formations" class="container">
-        <div class="section-title">
-            <h2>Formations Complètes</h2>
-            <p>Des programmes vidéo en accès illimité pour vous former à votre rythme.</p>
-        </div>
-        <div class="grid">
-            <div class="card">
-                <div>
-                    <span class="badge badge-paid">Programme Vidéo</span>
-                    <h3>Masterclass : Organisation Événementielle Pro</h3>
-                    <p>Accès complet à 2 heures de vidéo préenregistrée, supports PDF téléchargeables et modèles de contrats.</p>
-                    <div class="price">49,00 €</div>
-                </div>
-                
-                <button id="pay-button" class="btn">Acheter & Accéder</button>
-            </div>
-        </div>
-    </section>
-
     <footer>
-        <p>&copy; 2026 Tous droits réservés. Site hébergé gratuitement via Jamstack & Netlify.</p>
+        <p>&copy; 2026 La Maison Ose & Brille — Tous droits réservés.</p>
     </footer>
 
-    <script>
-        const payButton = document.getElementById('pay-button');
-
-        payButton.addEventListener('click', () => {
-            // Remplace ce lien par ton lien Stripe Payment Link créé dans ton tableau de bord Stripe
-            // Stripe redirigera l'acheteur vers formation.html après le paiement
-            window.location.href = 'https://buy.stripe.com/votre_lien_de_paiement_custom';
-        });
-    </script>
 </body>
 </html>
