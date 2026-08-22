@@ -253,35 +253,59 @@
     </section>
 
     <!-- CARTE ÉVÉNEMENT GRATUIT : QUEEN DAY -->
-            <div class="card" style="border: 2px solid var(--primary); background: #ffffff;">
-                <div>
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
-                        <div>
-                            <span class="badge badge-free">C'EST OFFERT À TOUTES LES QUEENS !</span>
-                            <span class="badge badge-vip" style="background: #fce4ec; color: var(--primary); border: 1px solid var(--primary);">Événement en Ligne</span>
-                            <h3 style="font-size: 1.8rem; margin: 8px 0; color: var(--primary);">QUEEN DAY — L'Après-midi des Queens d'Impact</h3>
-                        </div>
-                        <div style="text-align: right; background: var(--gold-light); padding: 8px 16px; border-radius: 12px; border: 1px solid var(--gold);">
-                            <div style="font-size: 0.85rem; font-weight: bold; color: var(--gold);">SAMEDI 29 AOÛT</div>
-                            <div style="font-size: 0.8rem; color: var(--text-dark);">14H00 – 17H00 (Zoom)</div>
-                        </div>
-                    </div>
+            <!-- CARTE ÉVÉNEMENT GRATUIT : QUEEN DAY -->
+<div class="card" style="border: 2px solid var(--primary); background: #ffffff; padding: 0; overflow: hidden;">
+    <div style="display: flex; flex-wrap: wrap;">
+        
+        <!-- Colonne Affiche -->
+        <div style="flex: 1; min-width: 300px; max-width: 450px; background: #000;">
+            <img src="queenday.jpg" alt="Affiche Queen Day - La Maison Ose & Brille" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
 
-                    <p style="font-size: 1.05rem; color: var(--gold); font-weight: 600; margin-top: 10px;">
-                        Une après-midi pour te reconnecter à toi, révéler ta beauté, reprendre ta place et passer à l'action.
-                    </p>
-
-                    <!-- Intervenantes -->
-                    <div style="display: flex; gap: 20px; flex-wrap: wrap; background: var(--bg-cream); padding: 12px 16px; border-radius: 10px; margin: 15px 0;">
-                        <div style="flex: 1; min-width: 200px;">
-                            <strong style="color: var(--primary);">👑 Votre hôte :</strong> Valentine Déovie<br>
-                            <small style="color: var(--text-muted);">Fondatrice de La Maison Ose & Brille® — Coach, Speaker, Mentore</small>
-                        </div>
-                        <div style="flex: 1; min-width: 200px;">
-                            <strong style="color: var(--primary);">💖 Invitée spéciale :</strong> Neuilly MOMBO<br>
-                            <small style="color: var(--text-muted);">Make Up Artiste — Experte en valorisation de soi par le maquillage</small>
-                        </div>
+        <!-- Colonne Contenu & Formulaire -->
+        <div style="flex: 1.2; min-width: 300px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <span class="badge badge-free">C'EST OFFERT À TOUTES LES QUEENS !</span>
+                        <span class="badge badge-vip" style="background: #fce4ec; color: var(--primary); border: 1px solid var(--primary);">Événement en Ligne</span>
                     </div>
+                    <div style="text-align: right; background: var(--gold-light); padding: 6px 12px; border-radius: 10px; border: 1px solid var(--gold);">
+                        <div style="font-size: 0.85rem; font-weight: bold; color: var(--gold);">SAMEDI 29 AOÛT</div>
+                        <div style="font-size: 0.8rem; color: var(--text-dark);">14H00 – 17H00 (Zoom)</div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.8rem; margin: 12px 0 8px 0; color: var(--primary);">QUEEN DAY — L'Après-midi des Queens d'Impact</h3>
+
+                <p style="font-size: 0.95rem; color: var(--gold); font-weight: 600; margin-bottom: 15px;">
+                    Une après-midi pour te reconnecter à toi, révéler ta beauté, reprendre ta place et passer à l'action.
+                </p>
+
+                <!-- Intervenantes -->
+                <div style="background: var(--bg-cream); padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 0.88rem;">
+                    <p style="margin: 0 0 6px 0;"><strong style="color: var(--primary);">👑 Votre hôte :</strong> Valentine Déovie (Fondatrice, Coach, Speaker, Mentore)</p>
+                    <p style="margin: 0;"><strong style="color: var(--primary);">💖 Invitée spéciale :</strong> Neuilly MOMBO (Make Up Artiste, Experte en valorisation de soi)</p>
+                </div>
+            </div>
+
+            <!-- Formulaire avec intégration Resend -->
+            <div style="background: var(--gold-light); padding: 18px; border-radius: 12px; border: 1px solid var(--gold); margin-top: 15px;">
+                <h4 style="margin: 0 0 10px 0; color: var(--primary); text-align: center; font-size: 1.05rem;">Réserve ta place offerte immédiatement</h4>
+                
+                <form id="queen-day-form">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <input type="text" id="prenom" name="prenom" placeholder="Ton prénom" required style="flex: 1; min-width: 130px; padding: 10px 14px; border: 1px solid var(--gold); border-radius: 20px; font-size: 0.9rem;">
+                        <input type="email" id="email" name="email" placeholder="Ton adresse e-mail" required style="flex: 1.2; min-width: 170px; padding: 10px 14px; border: 1px solid var(--gold); border-radius: 20px; font-size: 0.9rem;">
+                        <button type="submit" id="btn-submit" class="btn btn-gold" style="flex: 1; min-width: 160px; padding: 10px 15px; font-size: 0.9rem;">S'inscrire Gratuitement</button>
+                    </div>
+                    <div id="form-response" style="margin-top: 8px; font-weight: bold; text-align: center; font-size: 0.85rem;"></div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 
                     <hr style="border: 0; border-top: 1px solid var(--border-gold); margin: 20px 0;">
 
