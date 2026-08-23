@@ -56,7 +56,8 @@
           🎁 Réserve ta place offerte gratuitement
         </h3>
 
-        <form action="https://api.web3forms.com/submit" method="POST">
+        <!--<form action="https://api.web3forms.com/submit" method="POST"> -->
+		<form action="https://hook.eu1.make.com/6g39hj8i9go7017hh3nudinwktixynv7" method="POST">
           <!-- METS TA CLÉ WEB3FORMS ICI -->
 		  <input type="hidden" name="access_key" value="ac15145d-df11-4d79-ac85-a292ca3a4175">
           <input type="hidden" name="subject" value="👑 Nouvelle Inscription Queen Day !">
@@ -64,6 +65,9 @@
 		  
 		  <!-- Redirection vers votre page de remerciement personnalisée -->
 		  <input type="hidden" name="redirect" value="https://oseetbrille.vercel.app/merci.html">
+		  
+		  <!-- Active l'e-mail de confirmation automatique à l'inscrit(e) -->
+		  <input type="hidden" name="autoresponder" value="true">
 
           <div style="display: flex; gap: 10px; flex-wrap: wrap;">
             <!-- INPUT PRÉNOM -->
