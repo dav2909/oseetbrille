@@ -340,13 +340,21 @@
                     </div>
                 </div>
 
-							<form id="queen-day-form">
+							<!-- FORMULAIRE D'INSCRIPTION CONNECTÉ À TA BOÎTE MAIL -->
+			<form action="https://api.web3forms.com/submit" method="POST" style="margin-top: 20px;">
+				
+				<!-- METS TA CLÉ WEB3FORMS ICI -->
+				<input type="hidden" name="access_key" value="ac15145d-df11-4d79-ac85-a292ca3a4175">
+				
+				<!-- Sujet de l'e-mail que tu vas recevoir -->
+				<input type="hidden" name="subject" value="👑 Nouvelle inscription Queen Day !">
+				<input type="hidden" name="from_name" value="La Maison Ose & Brille">
+
 				<div style="display: flex; gap: 10px; flex-wrap: wrap;">
-					<input type="text" id="prenom" name="prenom" placeholder="Ton prénom" required style="flex: 1; min-width: 150px; padding: 12px; border: 1px solid var(--gold); border-radius: 20px;">
-					<input type="email" id="email" name="email" placeholder="Ton adresse e-mail" required style="flex: 1; min-width: 200px; padding: 12px; border: 1px solid var(--gold); border-radius: 20px;">
-					<button type="submit" id="btn-submit" class="btn btn-gold" style="flex: 1; min-width: 180px;">S'inscrire Gratuitement</button>
+					<input type="text" name="prenom" placeholder="Ton prénom" required style="flex: 1; min-width: 180px; padding: 12px 16px; border: 1px solid #c59b27; border-radius: 25px; outline: none;">
+					<input type="email" name="email" placeholder="Ton adresse e-mail" required style="flex: 1; min-width: 220px; padding: 12px 16px; border: 1px solid #c59b27; border-radius: 25px; outline: none;">
+					<button type="submit" class="btn btn-gold" style="flex: 1; min-width: 200px; padding: 12px 20px; border-radius: 25px; background-color: #c59b27; color: white; font-weight: bold; border: none; cursor: pointer;">S'inscrire Gratuitement</button>
 				</div>
-				<div id="form-response" style="margin-top: 10px; font-weight: bold; text-align: center;"></div>
 			</form>
 
 			<script>
