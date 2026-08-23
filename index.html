@@ -293,13 +293,20 @@
             <div style="background: var(--gold-light); padding: 18px; border-radius: 12px; border: 1px solid var(--gold); margin-top: 15px;">
                 <h4 style="margin: 0 0 10px 0; color: var(--primary); text-align: center; font-size: 1.05rem;">Réserve ta place offerte immédiatement</h4>
                 
-                <form id="queen-day-form" action="https://api.web3forms.com/submit" method="POST" >
-					<input type="hidden" name="access_key" value="ac15145d-df11-4d79-ac85-a292ca3a4175">
+                <form action="https://api.web3forms.com/submit" method="POST" style="margin-top: 20px;">
+				
+				<!-- METS TA CLÉ WEB3FORMS ICI -->
+				<input type="hidden" name="access_key" value="ac15145d-df11-4d79-ac85-a292ca3a4175">
+				
+				<!-- Sujet de l'e-mail que tu vas recevoir -->
+				<input type="hidden" name="subject" value="👑 Nouvelle inscription Queen Day !">
+				<input type="hidden" name="from_name" value="La Maison Ose & Brille">
                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                         <input type="text" id="prenom" name="prenom" placeholder="Ton prénom" required style="flex: 1; min-width: 130px; padding: 10px 14px; border: 1px solid var(--gold); border-radius: 20px; font-size: 0.9rem;">
                         <input type="email" id="email" name="email" placeholder="Ton adresse e-mail" required style="flex: 1.2; min-width: 170px; padding: 10px 14px; border: 1px solid var(--gold); border-radius: 20px; font-size: 0.9rem;">
-                        <button type="submit" id="btn-submit" class="btn btn-gold" style="flex: 1; min-width: 160px; padding: 10px 15px; font-size: 0.9rem;">S'inscrire Gratuitement</button>
-                    </div>
+						<button type="submit" class="btn btn-gold" style="flex: 1; min-width: 200px; padding: 12px 20px; border-radius: 25px; background-color: #c59b27; color: white; font-weight: bold; border: none; cursor: pointer;">S'inscrire Gratuitement</button>
+
+					</div>
                     <div id="form-response" style="margin-top: 8px; font-weight: bold; text-align: center; font-size: 0.85rem;"></div>
                 </form>
             </div>
@@ -411,7 +418,7 @@
                 <h3 style="color: var(--primary);">Les 5 étapes pour structurer ton offre</h3>
                 <p style="color: var(--text-muted); font-size: 0.95rem;">Reçois gratuitement la vidéo d'introduction et le modèle de travail direct par e-mail.</p>
                 
-                <form action="https://api.web3forms.com/submit" method="POST" >
+                <form action="https://api.web3forms.com/submit" method="POST" onsubmit="alert('Inscription enregistrée !'); return false;">
 					<input type="hidden" name="access_key" value="ac15145d-df11-4d79-ac85-a292ca3a4175">
                     <div class="form-group">
                         <input type="text" placeholder="Ton prénom" required>
