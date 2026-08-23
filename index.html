@@ -1,439 +1,86 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Maison Ose & Brille — Accompagnement & Événements</title>
-    <!-- Script Stripe -->
-    <script src="https://js.stripe.com/v3/"></script>
-    <style>
-        /* Charte Graphique "La Maison Ose & Brille" */
-        :root {
-            --primary: #a02848;         /* Bordeaux / Rose profond */
-            --primary-hover: #801e38;   /* Bordeaux foncé */
-            --gold: #c59b27;            /* Doré principal */
-            --gold-light: #f4ebd0;      /* Fond doré très clair */
-            --bg-cream: #faf6f0;        /* Fond crème chaud */
-            --bg-card: #ffffff;
-            --text-dark: #2d1820;       /* Marron/Bordeaux très foncé */
-            --text-muted: #6e5860;     /* Marron doux */
-            --border-gold: rgba(197, 155, 39, 0.3);
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: var(--text-dark);
-            background-color: var(--bg-cream);
-            line-height: 1.6;
-        }
-
-        /* En-tête */
-        header {
-            background: #ffffff;
-            border-bottom: 2px solid var(--gold-light);
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            box-shadow: 0 2px 10px rgba(160, 40, 72, 0.05);
-        }
-
-        .nav-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        nav a {
-            margin-left: 20px;
-            color: var(--text-dark);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: color 0.2s;
-        }
-
-        nav a:hover {
-            color: var(--primary);
-        }
-
-        /* Hero / En-tête de bienvenue */
-        .hero {
-            text-align: center;
-            padding: 70px 20px 50px;
-            background: linear-gradient(180deg, #ffffff 0%, var(--bg-cream) 100%);
-            border-bottom: 1px solid var(--border-gold);
-        }
-
-        .hero h1 {
-            font-size: 2.4rem;
-            margin-bottom: 12px;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .hero p.subtitle {
-            font-size: 1.2rem;
-            color: var(--gold);
-            font-weight: 600;
-            margin-top: 0;
-        }
-
-        .hero p.description {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            max-width: 650px;
-            margin: 0 auto 25px;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .section-title h2 {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .section-title p {
-            color: var(--gold);
-            font-weight: 500;
-        }
-
-        /* Grilles & Cartes */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-gold);
-            border-radius: 16px;
-            padding: 28px;
-            box-shadow: 0 4px 15px rgba(160, 40, 72, 0.04);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card-vip {
-            border: 2px solid var(--gold);
-            background: linear-gradient(180deg, #ffffff 0%, #fffdf9 100%);
-            box-shadow: 0 8px 25px rgba(197, 155, 39, 0.15);
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            width: fit-content;
-        }
-
-        .badge-vip { background: var(--gold-light); color: var(--gold); border: 1px solid var(--gold); }
-        .badge-free { background: #e8f5e9; color: #2e7d32; }
-        .badge-paid { background: #fce4ec; color: var(--primary); }
-
-        .price {
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        /* Boutons */
-        .btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: #ffffff;
-            padding: 14px 24px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            text-align: center;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            width: 100%;
-            box-sizing: border-box;
-            box-shadow: 0 4px 12px rgba(160, 40, 72, 0.2);
-        }
-
-        .btn:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-1px);
-        }
-
-        .btn-gold {
-            background-color: var(--gold);
-            color: #ffffff;
-            box-shadow: 0 4px 12px rgba(197, 155, 39, 0.3);
-        }
-
-        .btn-gold:hover {
-            background-color: #b08a20;
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            box-shadow: none;
-        }
-
-        .btn-outline:hover {
-            background-color: #fce4ec;
-        }
-
-        /* Formulaire */
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-gold);
-            border-radius: 8px;
-            box-sizing: border-box;
-            margin-bottom: 12px;
-            background: #faf6f0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            background: #ffffff;
-            border-top: 1px solid var(--border-gold);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Barre de Navigation avec Logo -->
-    <header>
-        <div class="nav-container">
-            <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
-                <img src="logo.jpeg" alt="Logo La Maison Ose & Brille" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary);">
-                <div style="display: flex; flex-direction: column;">
-                    <span style="font-size: 1.1rem; font-weight: bold; color: var(--primary); line-height: 1.2;">LA MAISON</span>
-                    <span style="font-size: 0.85rem; font-weight: 600; color: var(--gold); letter-spacing: 0.5px;">Ose & Brille</span>
-                </div>
-            </a>
-            <nav>
-                <a href="#evenements">Événements</a>
-                <a href="#gratuite">Formation Gratuite</a>
-                <a href="#formations">Formations Payantes</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Section Présentation / Hero -->
-    <section class="hero">
-        <h1>La Maison Ose & Brille</h1>
-        <p class="subtitle">Un espace pour te reconnecter, te relever et rayonner à ta façon.</p>
-        <p class="description">
-            Ose être toi, et brille pour le monde. Découvre nos programmes, ateliers VIP et formations pour lancer et développer ton activité en ligne.
-        </p>
-        <a href="#evenements" class="btn btn-gold" style="width: auto; padding: 14px 36px;">Découvrir le Bootcamp</a>
-    </section>
-
-    <!-- CARTE ÉVÉNEMENT GRATUIT : QUEEN DAY -->
-            <!-- CARTE ÉVÉNEMENT GRATUIT : QUEEN DAY -->
-<div class="card" style="border: 2px solid var(--primary); background: #ffffff; padding: 0; overflow: hidden;">
-    <div style="display: flex; flex-wrap: wrap;">
-        
-        <!-- Colonne Affiche -->
-        <div style="flex: 1; min-width: 300px; max-width: 450px; background: #000;">
-            <img src="queenday.jpeg" alt="Affiche Queen Day - La Maison Ose & Brille" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-        </div>
-
-        <!-- Colonne Contenu & Formulaire -->
-        <div style="flex: 1.2; min-width: 300px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
-                    <div>
-                        <span class="badge badge-free">C'EST OFFERT À TOUTES LES QUEENS !</span>
-                        <span class="badge badge-vip" style="background: #fce4ec; color: var(--primary); border: 1px solid var(--primary);">Événement en Ligne</span>
-                    </div>
-                    <div style="text-align: right; background: var(--gold-light); padding: 6px 12px; border-radius: 10px; border: 1px solid var(--gold);">
-                        <div style="font-size: 0.85rem; font-weight: bold; color: var(--gold);">SAMEDI 29 AOÛT</div>
-                        <div style="font-size: 0.8rem; color: var(--text-dark);">14H00 – 17H00 (Zoom)</div>
-                    </div>
-                </div>
-
-                <h3 style="font-size: 1.8rem; margin: 12px 0 8px 0; color: var(--primary);">QUEEN DAY — L'Après-midi des Queens d'Impact</h3>
-
-                <p style="font-size: 0.95rem; color: var(--gold); font-weight: 600; margin-bottom: 15px;">
-                    Une après-midi pour te reconnecter à toi, révéler ta beauté, reprendre ta place et passer à l'action.
-                </p>
-
-                <!-- Intervenantes -->
-                <div style="background: var(--bg-cream); padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 0.88rem;">
-                    <p style="margin: 0 0 6px 0;"><strong style="color: var(--primary);">👑 Votre hôte :</strong> Valentine Déovie (Fondatrice, Coach, Speaker, Mentore)</p>
-                    <p style="margin: 0;"><strong style="color: var(--primary);">💖 Invitée spéciale :</strong> Neuilly MOMBO (Make Up Artiste, Experte en valorisation de soi)</p>
-                </div>
-            </div>
-
-            <!-- Formulaire avec intégration Resend -->
-            <div style="background: var(--gold-light); padding: 18px; border-radius: 12px; border: 1px solid var(--gold); margin-top: 15px;">
-                <h4 style="margin: 0 0 10px 0; color: var(--primary); text-align: center; font-size: 1.05rem;">Réserve ta place offerte immédiatement</h4>
-                
-                <form action="https://api.web3forms.com/submit" method="POST" style="margin-top: 20px;">
-				
-				<!-- METS TA CLÉ WEB3FORMS ICI -->
-				<input type="hidden" name="access_key" value="ac15145d-df11-4d79-ac85-a292ca3a4175">
-				
-				<!-- Sujet de l'e-mail que tu vas recevoir -->
-				<input type="hidden" name="subject" value="👑 Nouvelle inscription Queen Day !">
-				<input type="hidden" name="from_name" value="La Maison Ose & Brille">
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        <input type="text" id="prenom" name="prenom" placeholder="Ton prénom" required style="flex: 1; min-width: 130px; padding: 10px 14px; border: 1px solid var(--gold); border-radius: 20px; font-size: 0.9rem;">
-                        <input type="email" id="email" name="email" placeholder="Ton adresse e-mail" required style="flex: 1.2; min-width: 170px; padding: 10px 14px; border: 1px solid var(--gold); border-radius: 20px; font-size: 0.9rem;">
-						<button type="submit" class="btn btn-gold" style="flex: 1; min-width: 200px; padding: 12px 20px; border-radius: 25px; background-color: #c59b27; color: white; font-weight: bold; border: none; cursor: pointer;">S'inscrire Gratuitement</button>
-
-					</div>
-                    <div id="form-response" style="margin-top: 8px; font-weight: bold; text-align: center; font-size: 0.85rem;"></div>
-                </form>
-            </div>
-
-        </div>
+<!-- SECTION QUEEN DAY - DESIGN PREMIUM LA MAISON OSE & BRILLE -->
+<div class="qd-card-wrapper" style="max-width: 1100px; margin: 40px auto; font-family: 'Poppins', 'Segoe UI', sans-serif;">
+  <div style="background: #ffffff; border-radius: 20px; box-shadow: 0 15px 35px rgba(128, 19, 54, 0.08); border: 1px solid #f3e5e8; overflow: hidden; display: flex; flex-wrap: wrap;">
+    
+    <!-- COLONNE AFFICHE -->
+    <div style="flex: 1; min-width: 320px; max-width: 440px; background: #801336; position: relative;">
+      <img src="queenday.jpg" alt="Affiche Queen Day - La Maison Ose & Brille" style="width: 100%; height: 100%; object-fit: cover; display: block;">
     </div>
-</div>
 
-                    <hr style="border: 0; border-top: 1px solid var(--border-gold); margin: 20px 0;">
+    <!-- COLONNE CONTENU & FORMULAIRE -->
+    <div style="flex: 1.2; min-width: 320px; padding: 35px 30px; display: flex; flex-direction: column; justify-content: space-between;">
+      
+      <div>
+        <!-- ENTÊTE : BADGES & DATE -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+            <span style="background: linear-gradient(135deg, #fff0f3, #ffe3e8); color: #801336; font-size: 0.75rem; font-weight: 700; padding: 6px 14px; border-radius: 50px; border: 1px solid #f3c2cd; letter-spacing: 0.5px; text-transform: uppercase;">
+              ✨ C'est offert à toutes les Queens !
+            </span>
+            <span style="background: #fdf8eb; color: #b8860b; font-size: 0.75rem; font-weight: 600; padding: 6px 14px; border-radius: 50px; border: 1px solid #f0e1b9;">
+              📶 Événement en Ligne (Zoom)
+            </span>
+          </div>
 
-                    <!-- Au Programme -->
-                    <h4 style="margin-bottom: 12px; color: var(--primary); text-align: center;">👑 AU PROGRAMME DE L'APRÈS-MIDI</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; font-size: 0.88rem;">
-                        <div style="background: #ffffff; padding: 10px; border-radius: 8px; border: 1px solid var(--border-gold);">
-                            <strong style="color: var(--gold);">14H00 - 14H30</strong><br>
-                            <strong>Ouverture : Révèle ta Queen</strong><br>
-                            Reconnexion, inspiration et partage.
-                        </div>
-                        <div style="background: #ffffff; padding: 10px; border-radius: 8px; border: 1px solid var(--border-gold);">
-                            <strong style="color: var(--gold);">14H30 - 15H15</strong><br>
-                            <strong>Atelier : Révèle ta Queen</strong><br>
-                            Renforce ton estime de soi et ton image.
-                        </div>
-                        <div style="background: #ffffff; padding: 10px; border-radius: 8px; border: 1px solid var(--border-gold);">
-                            <strong style="color: var(--gold);">15H15 - 16H15</strong><br>
-                            <strong>Atelier Auto-Maquillage</strong><br>
-                            Mettre en valeur ta beauté naturelle.
-                        </div>
-                        <div style="background: #ffffff; padding: 10px; border-radius: 8px; border: 1px solid var(--border-gold);">
-                            <strong style="color: var(--gold);">16H15 - 16H45</strong><br>
-                            <strong>Queen d'Impact</strong><br>
-                            Quelle femme veux-tu devenir ?
-                        </div>
-                        <div style="background: #ffffff; padding: 10px; border-radius: 8px; border: 1px solid var(--border-gold);">
-                            <strong style="color: var(--gold);">16H45 - 17H00</strong><br>
-                            <strong>Passage à l'Action</strong><br>
-                            Repars avec des actions concrètes.
-                        </div>
-                    </div>
-                </div>
-
-							<!-- FORMULAIRE D'INSCRIPTION CONNECTÉ À TA BOÎTE MAIL -->
-			<form action="https://api.web3forms.com/submit" method="POST" style="margin-top: 20px;">
-				
-				<!-- METS TA CLÉ WEB3FORMS ICI -->
-				<input type="hidden" name="access_key" value="ac15145d-df11-4d79-ac85-a292ca3a4175">
-				
-				<!-- Sujet de l'e-mail que tu vas recevoir -->
-				<input type="hidden" name="subject" value="👑 Nouvelle inscription Queen Day !">
-				<input type="hidden" name="from_name" value="La Maison Ose & Brille">
-
-				<div style="display: flex; gap: 10px; flex-wrap: wrap;">
-					<input type="text" name="prenom" placeholder="Ton prénom" required style="flex: 1; min-width: 180px; padding: 12px 16px; border: 1px solid #c59b27; border-radius: 25px; outline: none;">
-					<input type="email" name="email" placeholder="Ton adresse e-mail" required style="flex: 1; min-width: 220px; padding: 12px 16px; border: 1px solid #c59b27; border-radius: 25px; outline: none;">
-					<button type="submit" class="btn btn-gold" style="flex: 1; min-width: 200px; padding: 12px 20px; border-radius: 25px; background-color: #c59b27; color: white; font-weight: bold; border: none; cursor: pointer;">S'inscrire Gratuitement</button>
-				</div>
-			</form>
-
-			<script>
-			document.getElementById('queen-day-form').addEventListener('submit', async function(e) {
-				e.preventDefault();
-				
-				const btn = document.getElementById('btn-submit');
-				const responseDiv = document.getElementById('form-response');
-				
-				btn.disabled = true;
-				btn.innerText = "Inscription en cours...";
-				responseDiv.innerText = "";
-
-				const data = {
-					prenom: document.getElementById('prenom').value,
-					email: document.getElementById('email').value
-				};
-
-				try {
-					const res = await fetch('/api/send-email', {
-						method: 'POST',
-						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify(data)
-					});
-
-					if (res.ok) {
-						responseDiv.style.color = "green";
-						responseDiv.innerText = "🎉 Félicitations ! Ton inscription est confirmée. Vérifie ta boîte mail.";
-						document.getElementById('queen-day-form').reset();
-					} else {
-						throw new Error('Erreur réseau');
-					}
-				} catch (err) {
-					responseDiv.style.color = "red";
-					responseDiv.innerText = "Une erreur est survenue. Veuillez réinstaller ou réessayer.";
-				} finally {
-					btn.disabled = false;
-					btn.innerText = "S'inscrire Gratuitement";
-				}
-			});
-			</script>
-            </div>
-
-    <!-- Section Lead Magnet / Offert 
-    <section id="gratuite" style="background: #ffffff; border-y: 1px solid var(--border-gold);">
-        <div class="container">
-            <div class="section-title">
-                <h2>Ressource Offerte</h2>
-                <p>Commence ton aventure sans débourser un centime</p>
-            </div>
-            <div style="max-width: 480px; margin: 0 auto;" class="card">
-                <span class="badge badge-free">Accès Immédiat</span>
-                <h3 style="color: var(--primary);">Les 5 étapes pour structurer ton offre</h3>
-                <p style="color: var(--text-muted); font-size: 0.95rem;">Reçois gratuitement la vidéo d'introduction et le modèle de travail direct par e-mail.</p>
-                
-                <form action="https://api.web3forms.com/submit" method="POST" onsubmit="alert('Inscription enregistrée !'); return false;">
-					<input type="hidden" name="access_key" value="ac15145d-df11-4d79-ac85-a292ca3a4175">
-                    <div class="form-group">
-                        <input type="text" placeholder="Ton prénom" required>
-                        <input type="email" placeholder="Ton adresse e-mail" required>
-                    </div>
-					<button type="submit" class="btn btn-gold" style="flex: 1; min-width: 200px; padding: 12px 20px; border-radius: 25px; background-color: #c59b27; color: white; font-weight: bold; border: none; cursor: pointer;">S'inscrire Gratuitement</button>
-                    <button type="submit" class="btn btn-outline">Recevoir la vidéo gratuite</button>
-                </form>
-            </div>
+          <!-- ENCADRÉ DATE -->
+          <div style="background: linear-gradient(135deg, #fffcf5, #fef4dc); border: 1.5px solid #d4af37; padding: 8px 16px; border-radius: 12px; text-align: right; box-shadow: 0 2px 8px rgba(212, 175, 55, 0.15);">
+            <div style="font-size: 0.85rem; font-weight: 800; color: #801336; text-transform: uppercase; letter-spacing: 0.5px;">📅 Samedi 29 Août</div>
+            <div style="font-size: 0.8rem; font-weight: 600; color: #b8860b; margin-top: 2px;">14H00 – 17H00</div>
+          </div>
         </div>
-    </section>-->
 
-    <footer>
-        <p>&copy; 2026 La Maison Ose & Brille — Tous droits réservés.</p>
-    </footer>
+        <!-- TITRE PRINCIPAL -->
+        <h2 style="font-size: 1.85rem; font-weight: 800; color: #801336; line-height: 1.2; margin: 0 0 12px 0;">
+          QUEEN DAY — <span style="background: linear-gradient(45deg, #801336, #c59b27); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">L'Après-midi des Queens d'Impact</span>
+        </h2>
 
-</body>
-</html>
+        <!-- SOUS-TITRE ACCROCHEUR -->
+        <p style="font-size: 0.98rem; color: #5a5a5a; font-weight: 500; line-height: 1.5; margin-bottom: 22px;">
+          Une après-midi privilégiée pour te reconnecter à toi, révéler ta beauté naturelle, reprendre ta place et passer enfin à l'action.
+        </p>
+
+        <!-- CARTE INTERVENANTES -->
+        <div style="background: #fff8f9; border-left: 4px solid #801336; padding: 14px 18px; border-radius: 0 12px 12px 0; margin-bottom: 25px;">
+          <div style="font-size: 0.88rem; color: #333; margin-bottom: 6px;">
+            <strong style="color: #801336;">👑 Votre hôte :</strong> <b>Valentine Déovie</b> <span style="color: #777; font-size: 0.82rem;">(Fondatrice, Coach, Speaker, Mentore)</span>
+          </div>
+          <div style="font-size: 0.88rem; color: #333;">
+            <strong style="color: #801336;">💖 Invitée spéciale :</strong> <b>Neuilly MOMBO</b> <span style="color: #777; font-size: 0.82rem;">(Make Up Artiste, Experte valorisation de soi)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOC FORMULAIRE D'INSCRIPTION -->
+      <div style="background: linear-gradient(135deg, #fffbf2, #fff5f7); border: 1.5px solid #e2c981; border-radius: 16px; padding: 20px; box-shadow: 0 4px 15px rgba(197, 155, 39, 0.08);">
+        <h3 style="margin: 0 0 12px 0; color: #801336; font-size: 1rem; font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: 0.5px;">
+          🎁 Réserve ta place offerte gratuitement
+        </h3>
+
+        <form action="https://api.web3forms.com/submit" method="POST">
+          <!-- METS TA CLÉ WEB3FORMS ICI -->
+          <input type="hidden" name="access_key" value="VOTRE_CLE_WEB3FORMS_ICI">
+          <input type="hidden" name="subject" value="👑 Nouvelle Inscription Queen Day !">
+          <input type="hidden" name="from_name" value="La Maison Ose & Brille">
+
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <!-- INPUT PRÉNOM -->
+            <div style="flex: 1; min-width: 140px; position: relative;">
+              <input type="text" name="prenom" placeholder="Ton prénom" required style="width: 100%; padding: 12px 16px; border: 1.5px solid #d4af37; border-radius: 30px; font-size: 0.9rem; outline: none; background: #ffffff; color: #333; box-sizing: border-box;">
+            </div>
+
+            <!-- INPUT EMAIL -->
+            <div style="flex: 1.3; min-width: 180px; position: relative;">
+              <input type="email" name="email" placeholder="Ton adresse e-mail" required style="width: 100%; padding: 12px 16px; border: 1.5px solid #d4af37; border-radius: 30px; font-size: 0.9rem; outline: none; background: #ffffff; color: #333; box-sizing: border-box;">
+            </div>
+
+            <!-- BOUTON VALIDER -->
+            <button type="submit" style="flex: 1; min-width: 170px; padding: 12px 20px; border: none; border-radius: 30px; background: linear-gradient(135deg, #c59b27, #9e7917); color: #ffffff; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(197, 155, 39, 0.3);">
+              Je m'inscris ! ✨
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
